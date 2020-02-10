@@ -1,6 +1,7 @@
 import beans.Client;
 import beans.Event;
 import loggers.EventLogger;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,6 +15,9 @@ public class App {
     }
 
     public static void main(String[] args) {
+//        ApplicationContext parent = new ClassPathXmlApplicationContext("spring.xml");
+//        ApplicationContext child = new ClassPathXmlApplicationContext("spring.xml", parent);
+
         ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 
         App app = (App) ctx.getBean("app");

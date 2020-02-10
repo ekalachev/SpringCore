@@ -5,6 +5,9 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
+    <!-- Import from other settings files -->
+    <import resource="loggers.xml"/>
+
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
 
     <bean id="client" class="beans.Client">
@@ -19,18 +22,20 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
-<!--    <bean id="eventLogger" class="loggers.FileEventLogger" init-method="init">-->
-<!--        <constructor-arg value="logs.txt"/>-->
-<!--    </bean>-->
-
-    <bean id="eventLogger" class="loggers.CacheFileEventLogger" init-method="init" destroy-method="destroy">
-        <constructor-arg value="logs.txt"/>
-        <constructor-arg value="2"/>
-    </bean>
-
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="eventLogger"/>
+        <constructor-arg ref="cacheEventLogger"/>
     </bean>
 
+    <!--DI -->
+    <!--    <bean id="monitoring" class="..." depends-on="app"/>-->
+    <!--    <bean id="app" class="..."-->
+
+    <!-- LAZY loading -->
+    <!--    <bean id="lazy" class="..." lazy-init="true"/>-->
+
 </beans>
+
+<!--<beans default-lazy-init="true">-->
+<!--  no beans will be pre-initialized ...  -->
+<!--</beans>-->
