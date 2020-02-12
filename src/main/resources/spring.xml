@@ -13,6 +13,8 @@
     <bean id="client" class="beans.Client">
         <constructor-arg value="1"/>
         <constructor-arg value="John Smith"/>
+        <!-- property must have setter -->
+        <property name="greeting" value="Hello there!"/>
     </bean>
 
     <bean id="event" class="beans.Event" scope="prototype">
@@ -25,6 +27,12 @@
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="cacheEventLogger"/>
+        <constructor-arg>
+            <map>
+                <entry key="INFO" value-ref="consoleEventLogger"/>
+                <entry key="ERROR" value-ref="fileEventLogger"/>
+            </map>
+        </constructor-arg>
     </bean>
 
     <!--DI -->
