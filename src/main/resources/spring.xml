@@ -54,7 +54,8 @@
         <!-- Expression language -->
         <constructor-arg value="#{ T(beans.Event).isDay() ? fileEventLogger : consoleEventLogger }" />
 
-<!--  All elements with conditions
+<!--  Operations on collections
+      All elements with conditions
       <property value="#{ clients.?[id < 10] }" ...
       First suitable element
       <property value="#{ clients.^[id < 10] }" ...
