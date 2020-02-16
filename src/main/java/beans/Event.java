@@ -42,11 +42,6 @@ public class Event {
 
     public static boolean isDay() {
         LocalDateTime date = LocalDateTime.now();
-
-        if (date.getHour() > 8 && date.getHour() < 17) {
-            return true;
-        }
-
-        return false;
+        return date.getHour() > 8 && date.getHour() < 17;
     }
 }
