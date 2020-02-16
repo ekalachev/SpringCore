@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
  		http://www.springframework.org/schema/beans
- 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
     <!-- Import from other settings files -->
     <import resource="loggers.xml"/>
 
-    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" />
+
+    <!-- Adding bunch of resource files -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="systemPropertiesMode">
+            <util:constant
+                    static-field="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        </property>
+    </bean>
 
     <bean id="client" class="beans.Client">
-        <constructor-arg value="1"/>
-        <constructor-arg value="John Smith"/>
-        <!-- property must have setter -->
-        <property name="greeting" value="Hello there!"/>
+        <constructor-arg value="${id}"/>
+        <constructor-arg value="${name}"/>
+        <property name="greeting" value="${greeting}"/>
+        <!-- For LINUX, Mac OS -->
+        <property name="systemAdmin" value="#{ systemEnvironment['USER'] }"/>
+        <!-- For Windows -->
+        <!--  <property name="systemAdmin" value="#{ systemEnvironment['USERNAME'] }"/> -->
     </bean>
 
     <bean id="event" class="beans.Event" scope="prototype">
@@ -24,15 +44,15 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
+    <util:map id="loggerMap">
+        <entry key="INFO" value-ref="consoleEventLogger" />
+        <entry key="ERROR" value-ref="combinedEventLogger" />
+    </util:map>
+
     <bean id="app" class="App">
-        <constructor-arg ref="client"/>
-        <constructor-arg ref="cacheEventLogger"/>
-        <constructor-arg>
-            <map>
-                <entry key="INFO" value-ref="consoleEventLogger"/>
-                <entry key="ERROR" value-ref="fileEventLogger"/>
-            </map>
-        </constructor-arg>
+        <constructor-arg ref="client" />
+        <constructor-arg value="#{ T(beans.Event).isDay() ? fileEventLogger : consoleEventLogger }" />
+        <constructor-arg ref="loggerMap"/>
     </bean>
 
     <!--DI -->
@@ -41,7 +61,6 @@
 
     <!-- LAZY loading -->
     <!--    <bean id="lazy" class="..." lazy-init="true"/>-->
-
 </beans>
 
 <!--<beans default-lazy-init="true">-->

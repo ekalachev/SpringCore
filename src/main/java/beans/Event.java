@@ -1,6 +1,7 @@
 package beans;
 
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 
@@ -37,5 +38,15 @@ public class Event {
                 + ", id: " + this.id
                 + ", msg: " + this.msg
                 + "]";
+    }
+
+    public static boolean isDay() {
+        LocalDateTime date = LocalDateTime.now();
+
+        if (date.getHour() > 8 && date.getHour() < 17) {
+            return true;
+        }
+
+        return false;
     }
 }

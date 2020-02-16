@@ -4,6 +4,7 @@ public class Client {
     private String id;
     private String fullName;
     private String greeting;
+    private String systemAdmin;
 
     public Client(String id, String fullName) {
         this.id = id;
@@ -32,5 +33,13 @@ public class Client {
 
     public void setGreeting(String greeting) {
         this.greeting = greeting;
+    }
+
+    public String getSystemAdmin() {
+        return systemAdmin;
+    }
+
+    public void setSystemAdmin(String systemAdmin) {
+        this.systemAdmin = systemAdmin;
     }
 }

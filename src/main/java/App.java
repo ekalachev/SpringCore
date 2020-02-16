@@ -2,7 +2,6 @@ import beans.Client;
 import beans.Event;
 import beans.EventType;
 import loggers.EventLogger;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

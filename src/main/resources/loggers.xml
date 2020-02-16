@@ -15,13 +15,13 @@
         <constructor-arg value="2"/>
     </bean>
 
-<!--    <bean id="combinedEventLogger" class="loggers.CombinedEventLogger">-->
-<!--        <constructor-arg>-->
-<!--            <list>-->
-<!--                <ref bean="consoleEventLogger" />-->
-<!--                <ref bean="fileEventLogger"/>-->
-<!--            </list>-->
-<!--        </constructor-arg>-->
-<!--    </bean>-->
+    <bean id="combinedEventLogger" class="loggers.CombinedEventLogger">
+        <constructor-arg>
+            <list>
+                <ref bean="consoleEventLogger" />
+                <ref bean="fileEventLogger"/>
+            </list>
+        </constructor-arg>
+    </bean>
 
 </beans>
